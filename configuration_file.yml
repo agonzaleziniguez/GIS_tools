@@ -2,23 +2,23 @@
 
 # GRASS GIS
 # Windows
-grass_executable: C:\Program Files\QGIS 3.10\bin\grass78.bat
+grass_executable: C:\OSGeo4W64\bin\grass78.bat
 # # Linux
 # grass_executable: grass
 
 # SAGA-GIS
 # Windows
-saga_cmd_executable: C:\Program Files\QGIS 3.10\apps\saga-ltr\saga_cmd.exe
-saga_modules_tools_folder: C:\Program Files\QGIS 3.10\apps\saga-ltr\modules
+saga_cmd_executable: C:\OSGeo4W64\apps\saga-ltr\saga_cmd.exe
+saga_modules_tools_folder: C:\OSGeo4W64\apps\saga-ltr\modules
 # # Linux
 # saga_cmd_executable: saga_cmd
 # saga_modules_tools_folder: /usr/lib/x86_64-linux-gnu/saga
 
 # QGIS
 # Windows
-qgis_python_executable: C:\Program Files\QGIS 3.10\bin\python-qgis-ltr.bat
-qgis_prefix_path: C:\Program Files\QGIS 3.10\apps\qgis-ltr
-qgis_python_plugins_folder: C:\Program Files\QGIS 3.10\apps\qgis-ltr\python\plugins
+qgis_python_executable: C:\OSGeo4W64\bin\python-qgis-ltr.bat
+qgis_prefix_path: C:\OSGeo4W64\apps\qgis-ltr
+qgis_python_plugins_folder: C:\OSGeo4W64\apps\qgis-ltr\python\plugins
 # # Linux
 # qgis_python_executable: /usr/bin/python3
 # qgis_prefix_path: /usr
