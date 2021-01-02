@@ -143,13 +143,18 @@ class GrassSession(object):
                 raise RuntimeError('The algorithm failed to execute. Check ERROR in GRASS output above')
             else:
                 print(err.decode())
-                while not x.lower() == 'a' or isinstance(x, float):
+                while not x.lower() == 'a':
                     x = input(input_txt)
+                    try:
+                        float(x)
+                        break
+                    except:
+                        pass
 
                 if x.lower() == 'a':
                     break
                 else:
-                    snap = x
+                    snap = float(x)
 
 
     def clip_layer(self, layer_a, layer_b, operator, output):
