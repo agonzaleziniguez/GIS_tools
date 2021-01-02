@@ -9,6 +9,10 @@ import geopandas as gpd
 from gis_udm import utils, land_cover
 
 #%%
+# Set working directory
+os.chdir(r'gis_udm\Examples\example_01')
+
+#%%
 # Input/Output database (Geopackage) 
 # use os.path to create paths that are platform independent
 input_gpkg = os.path.join(os.getcwd(), 'input_dbase.gpkg')
