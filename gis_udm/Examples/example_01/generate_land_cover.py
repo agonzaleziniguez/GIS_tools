@@ -38,12 +38,15 @@ lc.preprocess_land_cover_layer(
     boundary='boundary',
     seglen=1,
     snap=0.5,
+    buffer_err=0.03,
     simplify=1,
-    area_thr=10
+    area_thr=10,
+    remove_inner_rings=True
 )
 
 # Check preprocess result
 # bb = lc.gs.to_gpd('building_blocks')
+# lc.gs.to_gpkg('building_blocks', 'test_db.gpkg', 'building_blocks')
 # bb.crs
 # bb.plot()
 
@@ -54,12 +57,14 @@ lc.preprocess_land_cover_layer(
     boundary='boundary',
     seglen=1,
     snap=0.55,
+    buffer_err=0.03,
     simplify=1,
     area_thr=10
 )
 
 # Check preprocess result
 # p = lc.gs.to_gpd('permeable')
+# lc.gs.to_gpkg('permeable', 'test_db.gpkg', 'permeable')
 # p.crs
 # p.plot()
 
