@@ -273,7 +273,7 @@ class GrassSession(object):
     def to_gpkg(self, layer, db, out_layer):
 
         flags = 'su' if os.path.exists(db) else 's'
-        self.run_command('v.out.ogr', flags=flags, input=layer, output=db,
+        self.run_command('v.out.ogr', flags=flags, input=layer, output='\"{}\"'.format(db),
                          output_layer=out_layer, format='GPKG', overwrite=True)
 
 
