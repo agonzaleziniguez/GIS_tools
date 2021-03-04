@@ -133,7 +133,7 @@ class GrassSession(object):
         x = ''
 
         while True:
-            cmd = 'v.in.ogr --overwrite input={} layer={} snap={} output={}'.format(input_path, layer, snap, output)
+            cmd = 'v.in.ogr --overwrite input=\"{}\" layer={} snap={} output={}'.format(input_path, layer, snap, output)
             command = '\"{}\" \"{}\" --exec {}'.format(self.grassbin, location, cmd)
             p = subprocess.Popen(command, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
             out, err = p.communicate(input=os.linesep.encode())
