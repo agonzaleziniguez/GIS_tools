@@ -38,7 +38,6 @@ class LandCover(object):
         print('\n\n')
         print('QGIS session:\n')
         qgs.qgis_version()
-        
 
     def preprocess_boundary(self, layer, simplify):
         db = self.input_gpkg
@@ -72,7 +71,7 @@ class LandCover(object):
         self.gs.run_command('g.remove', flags='f', type='vector', pattern='tmp_*')
 
     
-    def preprocess_land_cover_layer(self, layer, priority, boundary, seglen, snap, simplify, area_thr):
+    def preprocess_land_cover_layer(self, layer, priority, boundary, seglen, snap, buffer_err, simplify, area_thr, remove_inner_rings=False):
         db = self.input_gpkg
         bnd = boundary
         tmp_db = os.path.join(self.tmpdir, 'tmp.gpkg')
@@ -82,6 +81,14 @@ class LandCover(object):
 
         print('CLIPPING layer with boundary')
         self.gs.clip_layer(layer_a='tmp_imp', layer_b=bnd, operator='and', output='tmp_clip')
+
+        if remove_inner_rings:
+            print('\n\nRemoving INNER-RINGS')
+            self.gs.run_command('v.centroids', input='tmp_clip', output='tmp_centroids', overwrite=True)
+            self.gs.run_command('v.db.addcolumn', map='tmp_centroids', columns='\"diss INT\"')
+            self.gs.run_command('v.db.update', map='tmp_centroids', column='diss', value=1)
+            self.gs.run_command('v.dissolve', input='tmp_centroids', column='diss', output='tmp_clip',
+                                overwrite=True)
 
         print('DENSIFYING layer features')
         self.gs.run_command('v.split', flags='n', input='tmp_clip', output='tmp_split',
@@ -101,8 +108,12 @@ class LandCover(object):
         print('IMPORTING self-snapped layer')
         self.gs.import_interactive(input_path=tmp_db, layer='tmp_snap', snap=-1, output='tmp_imp')
 
+        print('BUFFER OUT-IN')
+        self.gs.run_command('v.buffer', overwrite=True, input='tmp_imp', output='tmp_buff_out', distance=buffer_err)
+        self.gs.run_command('v.buffer', overwrite=True, input='tmp_buff_out', output='tmp_buff_in', distance=-buffer_err)
+
         print('SIMPLIFYING layer geometries')
-        self.gs.run_command('v.generalize', overwrite=True, input='tmp_imp', output='tmp_simp',
+        self.gs.run_command('v.generalize', overwrite=True, input='tmp_buff_in', output='tmp_simp',
                             method='douglas', threshold=simplify)
 
         print('CLEANING layer')
@@ -116,7 +127,7 @@ class LandCover(object):
                             output='tmp_catdel', option='del', cat='-1', layer='1')
         self.gs.run_command('v.category', overwrite=True, input='tmp_catdel',
                             output=layer, option='add')
-        self.gs.run_command('v.db.droptable', flags='f', map=layer)
+        # self.gs.run_command('v.db.droptable', flags='f', map=layer)
         self.gs.run_command('v.db.addtable', map=layer, columns='\"priority INT, class TEXT\"')
         self.gs.run_command('v.db.update', map=layer, column='priority', value=priority)
         self.gs.run_command('v.db.update', map=layer, column='class', value=layer)
