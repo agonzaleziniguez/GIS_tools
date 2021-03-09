@@ -70,7 +70,7 @@ class GrassSession(object):
         p = subprocess.Popen(cmd, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
         out, err = p.communicate(input=os.linesep.encode())
 
-        if 'Press any key to continue' in out.decode() or 'ERROR' in err.decode().upper():
+        if 'Press any key to continue' in out.decode() or 'ERROR:' in err.decode():
             print(err.decode())
             raise RuntimeError('GRASS GIS location: {} not created'.format(location_path))
 
@@ -88,7 +88,7 @@ class GrassSession(object):
         p = subprocess.Popen(cmd, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
         out, err = p.communicate(input=os.linesep.encode())
 
-        if 'Press any key to continue' in out.decode() or 'ERROR' in err.decode().upper():
+        if 'Press any key to continue' in out.decode() or 'ERROR:' in err.decode():
             print(err.decode())
             raise RuntimeError('GRASS GIS mapset: {} not created'.format(mapset_path))
 
@@ -102,7 +102,7 @@ class GrassSession(object):
         p = subprocess.Popen(command, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
         out, err = p.communicate(input=os.linesep.encode())
 
-        if 'Press any key to continue' in out.decode() or 'ERROR' in err.decode().upper():
+        if 'Press any key to continue' in out.decode() or 'ERROR:' in err.decode():
             print(err.decode())
             raise RuntimeError('The algorithm failed to execute. Check ERROR in GRASS output above')
         else:
@@ -118,7 +118,7 @@ class GrassSession(object):
         p = subprocess.Popen(command, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
         out, err = p.communicate(input=os.linesep.encode())
         
-        if 'Press any key to continue' in out.decode() or 'ERROR' in err.decode().upper():
+        if 'Press any key to continue' in out.decode() or 'ERROR:' in err.decode():
             print(err.decode())
             raise RuntimeError('The algorithm failed to execute. Check ERROR in GRASS output above')
         else:
@@ -138,7 +138,7 @@ class GrassSession(object):
             p = subprocess.Popen(command, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
             out, err = p.communicate(input=os.linesep.encode())
     
-            if 'Press any key to continue' in out.decode() or 'ERROR' in err.decode().upper():
+            if 'Press any key to continue' in out.decode() or 'ERROR:' in err.decode():
                 print(err.decode())
                 raise RuntimeError('The algorithm failed to execute. Check ERROR in GRASS output above')
             else:
